@@ -74,7 +74,7 @@ export function HistoryPage() {
   };
 
   return (
-    <div className="space-y-4 max-w-4xl mx-auto w-full">
+    <div className="space-y-4 max-w-4xl mx-auto w-full text-white">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
@@ -82,11 +82,11 @@ export function HistoryPage() {
             <div className="w-7 h-7 rounded-md bg-neo-yellow border-2 border-neo-black shadow-brutal-sm flex items-center justify-center font-black text-xs text-neo-black">
               <Clock className="h-4 w-4 stroke-[2.5]" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neo-black">
+            <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
               Gate Audit Stream
             </h1>
           </div>
-          <p className="text-xs font-bold text-gray-600 mt-1">
+          <p className="text-xs font-bold text-gray-400 mt-1">
             Chronological audit trail of all verified entry scans
           </p>
         </div>
@@ -104,13 +104,13 @@ export function HistoryPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-3.5 sm:p-4 rounded-xl border-2 border-neo-black shadow-brutal flex flex-col sm:flex-row gap-3">
+      <div className="bg-[#171622] p-3.5 sm:p-4 rounded-xl border-2 border-white/15 shadow-brutal flex flex-col sm:flex-row gap-3">
         <div className="sm:w-72">
           <Select value={selectedEventId} onValueChange={setSelectedEventId}>
-            <SelectTrigger className="h-11 text-xs font-black uppercase border-2 border-neo-black shadow-brutal-sm">
+            <SelectTrigger className="h-11 text-xs font-black uppercase border-2 border-white/20 shadow-brutal-sm bg-[#0e0d15] text-white">
               <SelectValue placeholder="Select Event" />
             </SelectTrigger>
-            <SelectContent className="border-2 border-neo-black shadow-brutal-lg rounded-xl">
+            <SelectContent className="border-2 border-white/20 shadow-brutal-lg rounded-xl bg-[#171622] text-white">
               {events.map((e) => (
                 <SelectItem key={e.id} value={e.id} className="font-bold text-xs uppercase">
                   {e.name}
@@ -121,28 +121,28 @@ export function HistoryPage() {
         </div>
 
         <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 stroke-[2.5]" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 stroke-[2.5]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search attendee by name or ID..."
-            className="pl-10"
+            className="pl-10 bg-[#0e0d15] text-white"
           />
         </div>
       </div>
 
       {/* History List: Mobile Cards & Desktop Table */}
       {isLoading ? (
-        <div className="text-center py-12 text-xs font-black uppercase text-gray-500">
+        <div className="text-center py-12 text-xs font-black uppercase text-gray-400">
           Loading check-in logs...
         </div>
       ) : filteredCheckins.length === 0 ? (
-        <div className="bg-white rounded-xl border-2 border-neo-black shadow-brutal p-8 text-center">
-          <Clock className="h-10 w-10 text-gray-400 mx-auto mb-2" />
-          <p className="text-base font-black uppercase text-neo-black">
+        <div className="bg-[#171622] rounded-xl border-2 border-white/15 shadow-brutal p-8 text-center text-white">
+          <Clock className="h-10 w-10 text-gray-500 mx-auto mb-2" />
+          <p className="text-base font-black uppercase text-white">
             No Check-ins Recorded
           </p>
-          <p className="text-xs font-bold text-gray-500 mt-1">
+          <p className="text-xs font-bold text-gray-400 mt-1">
             Attendees who have been scanned at the gate will show up here live.
           </p>
         </div>
@@ -163,17 +163,17 @@ export function HistoryPage() {
               return (
                 <div
                   key={ci.id}
-                  className="bg-white p-3.5 rounded-xl border-2 border-neo-black shadow-brutal flex items-center justify-between gap-3 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm transition-all"
+                  className="bg-[#171622] p-3.5 rounded-xl border-2 border-white/15 shadow-brutal flex items-center justify-between gap-3 hover:border-white/30 transition-all text-white"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="w-10 h-10 rounded-lg bg-neo-yellow border-2 border-neo-black shadow-brutal-sm flex items-center justify-center font-black text-xs text-neo-black shrink-0">
                       {initials}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-black text-neo-black truncate">
+                      <p className="text-sm font-black text-white truncate">
                         {ci.attendee_name || 'Verified Attendee'}
                       </p>
-                      <p className="text-xs text-gray-500 font-mono font-bold">
+                      <p className="text-xs text-gray-400 font-mono font-bold">
                         {ci.registration_id_human || ci.registration_id.slice(-8)}
                       </p>
                       <div className="flex items-center gap-2 mt-1">
@@ -189,7 +189,7 @@ export function HistoryPage() {
                       <CheckCircle className="h-3 w-3 stroke-[3]" />
                       In Gate
                     </span>
-                    <p className="text-[11px] font-bold text-gray-500 mt-1">
+                    <p className="text-[11px] font-bold text-gray-400 mt-1">
                       {formatDateTime(ci.checked_in_at)}
                     </p>
                   </div>
@@ -199,9 +199,9 @@ export function HistoryPage() {
           </div>
 
           {/* Desktop Table View */}
-          <div className="hidden lg:block bg-white rounded-xl border-2 border-neo-black shadow-brutal overflow-hidden">
+          <div className="hidden lg:block bg-[#171622] rounded-xl border-2 border-white/15 shadow-brutal overflow-hidden text-white">
             <table className="w-full text-left text-sm">
-              <thead className="bg-neo-bg border-b-2 border-neo-black text-xs font-black text-neo-black uppercase tracking-wider">
+              <thead className="bg-[#1f1d2e] border-b-2 border-white/15 text-xs font-black text-gray-300 uppercase tracking-wider">
                 <tr>
                   <th className="py-3.5 px-4">Attendee</th>
                   <th className="py-3.5 px-4">Verification Method</th>
@@ -209,14 +209,14 @@ export function HistoryPage() {
                   <th className="py-3.5 px-4">Timestamp</th>
                 </tr>
               </thead>
-              <tbody className="divide-y-2 divide-gray-100">
+              <tbody className="divide-y-2 divide-white/10">
                 {filteredCheckins.map((ci) => (
-                  <tr key={ci.id} className="hover:bg-neo-bg/40 transition-colors">
+                  <tr key={ci.id} className="hover:bg-white/5 transition-colors">
                     <td className="py-3.5 px-4">
-                      <div className="font-black text-neo-black">
+                      <div className="font-black text-white">
                         {ci.attendee_name || 'Verified Attendee'}
                       </div>
-                      <div className="text-xs text-gray-500 font-mono font-bold">
+                      <div className="text-xs text-gray-400 font-mono font-bold">
                         {ci.registration_id_human || ci.registration_id}
                       </div>
                     </td>
@@ -231,7 +231,7 @@ export function HistoryPage() {
                         In Gate
                       </span>
                     </td>
-                    <td className="py-3.5 px-4 text-xs font-bold text-gray-700">
+                    <td className="py-3.5 px-4 text-xs font-bold text-gray-400">
                       {formatDateTime(ci.checked_in_at)}
                     </td>
                   </tr>

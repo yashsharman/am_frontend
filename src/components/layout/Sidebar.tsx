@@ -8,9 +8,11 @@ import {
   Clock,
   Settings,
   X,
+  LogOut,
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
-import { useAuthStore } from '../../stores/authStore';
+import { useAuth } from '../../hooks/useAuth';
+import aftermilesLogo from '../../assets/aftermiles.jpg';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -29,7 +31,7 @@ const navItems = [
 const adminItems = [{ to: '/admin', icon: Settings, label: 'Admin Settings' }];
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
-  const { user } = useAuthStore();
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -52,9 +54,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         {/* Brand Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b-2 border-white/10">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-neo-purple border-2 border-white shadow-brutal-sm flex items-center justify-center font-black text-sm text-white">
-              ⚡
-            </div>
+            <img
+              src={aftermilesLogo}
+              alt="Aftermiles"
+              className="w-9 h-9 rounded-lg object-cover border-2 border-white/20 shadow-brutal-sm"
+            />
             <div>
               <h1 className="text-lg font-black text-white tracking-tight">Aftermiles</h1>
               <p className="text-[10px] font-bold uppercase tracking-wider text-neo-lime">Control Deck</p>
@@ -119,18 +123,32 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           )}
         </nav>
 
-        {/* User Card at bottom of sidebar */}
-        <div className="p-3 border-t-2 border-white/10">
-          <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-md bg-neo-peach border border-white/20 text-white font-black text-xs flex items-center justify-center shrink-0">
-              {user?.name ? user.name.slice(0, 2).toUpperCase() : 'OP'}
+        {/* User Card & Logout at bottom of sidebar */}
+        <div className="p-3 border-t-2 border-white/10 space-y-2">
+          <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between gap-2.5">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-md bg-neo-peach border border-white/20 text-white font-black text-xs flex items-center justify-center shrink-0">
+                {user?.name ? user.name.slice(0, 2).toUpperCase() : 'OP'}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-black text-white truncate">{user?.name || 'Operator'}</p>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider truncate">
+                  {user?.role?.replace('_', ' ') || 'Staff'}
+                </p>
+              </div>
             </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-black text-white truncate">{user?.name || 'Operator'}</p>
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider truncate">
-                {user?.role?.replace('_', ' ') || 'Staff'}
-              </p>
-            </div>
+            <button
+              onClick={() => {
+                onClose();
+                logout();
+              }}
+              title="Logout"
+              aria-label="Logout"
+              className="w-8 h-8 rounded-md bg-[#171622] border-2 border-white/20 shadow-brutal-sm flex items-center justify-center text-gray-400 hover:bg-rose-900/40 hover:text-rose-400 hover:border-rose-500/50 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all shrink-0"
+              type="button"
+            >
+              <LogOut className="h-4 w-4 stroke-[2.5]" />
+            </button>
           </div>
         </div>
       </aside>

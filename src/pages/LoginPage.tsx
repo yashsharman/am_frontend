@@ -72,47 +72,47 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-neo-bg font-sans selection:bg-neo-yellow selection:text-neo-black">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-neo-bg font-sans selection:bg-neo-yellow selection:text-neo-black text-white">
       <div className="w-full max-w-sm space-y-4">
         {/* Brand Header */}
         <div className="text-center space-y-1.5">
-          <div className="h-12 w-12 rounded-xl bg-neo-purple border-2 border-neo-black shadow-brutal flex items-center justify-center mx-auto text-white">
+          <div className="h-12 w-12 rounded-xl bg-neo-purple border-2 border-white/20 shadow-brutal flex items-center justify-center mx-auto text-white">
             <ShieldCheck className="h-6 w-6 stroke-[2.5]" />
           </div>
-          <h1 className="text-2xl font-black uppercase tracking-tight text-neo-black mt-2">
+          <h1 className="text-2xl font-black uppercase tracking-tight text-white mt-2">
             Aftermiles Admin
           </h1>
-          <p className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">
             Gate Check-in & Pass Management Deck
           </p>
         </div>
 
         {/* Login Card */}
-        <Card className="border-2 border-neo-black shadow-brutal rounded-xl bg-white">
+        <Card className="border-2 border-white/15 shadow-brutal rounded-xl bg-[#171622] text-white">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base text-neo-black">Staff Sign In</CardTitle>
-            <CardDescription className="text-xs font-bold text-gray-500">
+            <CardTitle className="text-base text-white">Staff Sign In</CardTitle>
+            <CardDescription className="text-xs font-bold text-gray-400">
               Enter staff or administrator credentials
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Detailed API Error Alert */}
             {apiError && (
-              <div className="rounded-xl border-2 border-neo-black bg-neo-peach/20 p-3.5 text-xs text-rose-950 space-y-2 animate-in fade-in duration-200">
+              <div className="rounded-xl border-2 border-neo-peach/40 bg-rose-950/40 p-3.5 text-xs text-rose-200 space-y-2 animate-in fade-in duration-200">
                 <div className="flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-neo-peach stroke-[3] shrink-0 mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-black text-rose-950 uppercase">
+                      <span className="font-black text-rose-300 uppercase">
                         {apiError.status ? `HTTP ${apiError.status}` : 'Connection Error'}
                       </span>
                       {apiError.statusText && (
-                        <span className="text-[10px] px-1.5 py-0.5 bg-neo-peach text-white rounded border border-neo-black font-black uppercase">
+                        <span className="text-[10px] px-1.5 py-0.5 bg-neo-peach text-white rounded font-black uppercase">
                           {apiError.statusText}
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 font-bold text-rose-900 leading-snug">
+                    <p className="mt-1 font-bold text-rose-200 leading-snug">
                       {apiError.detail}
                     </p>
                   </div>
@@ -120,7 +120,7 @@ export function LoginPage() {
 
                 {/* Endpoint info */}
                 {apiError.endpoint && (
-                  <div className="flex items-center gap-1.5 text-[11px] text-rose-900 pt-1 border-t border-rose-300 truncate font-mono">
+                  <div className="flex items-center gap-1.5 text-[11px] text-rose-300 pt-1 border-t border-rose-900 truncate font-mono">
                     <Globe className="h-3 w-3 shrink-0" />
                     <span className="truncate">{apiError.endpoint}</span>
                   </div>
@@ -132,7 +132,7 @@ export function LoginPage() {
                     <button
                       type="button"
                       onClick={() => setShowRawDetails(!showRawDetails)}
-                      className="flex items-center gap-1 text-[11px] font-black uppercase text-rose-950 hover:underline mt-1 cursor-pointer"
+                      className="flex items-center gap-1 text-[11px] font-black uppercase text-rose-300 hover:underline mt-1 cursor-pointer"
                     >
                       {showRawDetails ? (
                         <>
@@ -145,7 +145,7 @@ export function LoginPage() {
                       )}
                     </button>
                     {showRawDetails && (
-                      <pre className="mt-1.5 p-2 bg-neo-black text-neo-lime rounded-lg text-[10px] font-mono border-2 border-neo-black overflow-x-auto max-h-36 whitespace-pre-wrap">
+                      <pre className="mt-1.5 p-2 bg-[#0e0d15] text-neo-lime rounded-lg text-[10px] font-mono border-2 border-white/20 overflow-x-auto max-h-36 whitespace-pre-wrap">
                         {apiError.rawJson}
                       </pre>
                     )}
@@ -156,7 +156,7 @@ export function LoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="email" className="font-black text-xs uppercase tracking-wider text-neo-black">
+                <Label htmlFor="email" className="font-black text-xs uppercase tracking-wider text-gray-300">
                   Email
                 </Label>
                 <Input
@@ -167,12 +167,12 @@ export function LoginPage() {
                   placeholder="admin@aftermiles.com"
                   required
                   autoComplete="email"
-                  className="mt-1"
+                  className="mt-1 bg-[#0e0d15] text-white"
                 />
               </div>
 
               <div>
-                <Label htmlFor="password" className="font-black text-xs uppercase tracking-wider text-neo-black">
+                <Label htmlFor="password" className="font-black text-xs uppercase tracking-wider text-gray-300">
                   Password
                 </Label>
                 <Input
@@ -183,13 +183,13 @@ export function LoginPage() {
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
-                  className="mt-1"
+                  className="mt-1 bg-[#0e0d15] text-white"
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-neo-purple text-white border-2 border-neo-black shadow-brutal hover:bg-indigo-600"
+                className="w-full bg-neo-purple text-white border-2 border-white/20 shadow-brutal hover:bg-indigo-600"
                 disabled={isLoggingIn}
               >
                 {isLoggingIn ? (
@@ -204,8 +204,8 @@ export function LoginPage() {
             </form>
 
             {/* Quick Test Demo Fill Helper */}
-            <div className="pt-3 border-t-2 border-gray-200 space-y-2 text-center">
-              <p className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">
+            <div className="pt-3 border-t-2 border-white/10 space-y-2 text-center">
+              <p className="text-[11px] text-gray-400 font-bold uppercase tracking-wider">
                 Quick-fill default credentials:
               </p>
               <div className="flex items-center justify-center gap-2 flex-wrap">

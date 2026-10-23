@@ -12,14 +12,14 @@ export function RegisterPage() {
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   return (
-    <div className="max-w-xl mx-auto space-y-6">
+    <div className="max-w-xl mx-auto space-y-6 text-white">
       {/* Header with Title and Import Action */}
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-            {createdRegistration ? 'Pass Generated' : 'Register Attendee'}
+          <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+            {createdRegistration ? 'Pass Generated' : 'Enroll Attendee'}
           </h1>
-          <p className="text-xs sm:text-sm text-gray-500">
+          <p className="text-xs sm:text-sm font-bold text-gray-400 mt-0.5">
             {createdRegistration
               ? 'Share or download the digital pass QR'
               : 'Create single or exclusive event passes'}
@@ -31,9 +31,9 @@ export function RegisterPage() {
             variant="outline"
             size="sm"
             onClick={() => setIsImportModalOpen(true)}
-            className="border-gray-300 text-xs sm:text-sm"
+            className="text-xs sm:text-sm"
           >
-            <Upload className="h-4 w-4 mr-1.5" />
+            <Upload className="h-4 w-4 mr-1.5 stroke-[2.5]" />
             Import CSV
           </Button>
         )}
@@ -42,8 +42,8 @@ export function RegisterPage() {
       {/* Main Content Area */}
       {createdRegistration && createdRegistration.pass ? (
         <div className="space-y-4 animate-in fade-in zoom-in-95 duration-200">
-          <div className="bg-emerald-50 border border-emerald-200 p-3 rounded-xl flex items-center gap-2 text-emerald-800 text-sm font-medium">
-            <CheckCircle className="h-5 w-5 text-emerald-600 shrink-0" />
+          <div className="bg-[#064e3b]/30 border-2 border-neo-lime p-3 rounded-xl flex items-center gap-2 text-neo-lime text-xs font-black uppercase tracking-wider">
+            <CheckCircle className="h-5 w-5 stroke-[3] shrink-0" />
             Registration created successfully! Pass QR is ready.
           </div>
 
@@ -58,19 +58,19 @@ export function RegisterPage() {
               onClick={() => setCreatedRegistration(null)}
               className="w-full max-w-sm"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
+              <ArrowLeft className="h-4 w-4 mr-2 stroke-[2.5]" />
               Register Another Attendee
             </Button>
           </div>
         </div>
       ) : (
-        <Card className="border border-gray-200 shadow-sm">
+        <Card className="border-2 border-white/15 shadow-brutal bg-[#171622] text-white">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base flex items-center gap-2">
-              <UserPlus className="h-4 w-4 text-indigo-600" />
+            <CardTitle className="text-base flex items-center gap-2 text-white">
+              <UserPlus className="h-4 w-4 text-neo-lime stroke-[2.5]" />
               Attendee Details
             </CardTitle>
-            <CardDescription className="text-xs">
+            <CardDescription className="text-xs font-bold text-gray-400">
               Exclusive passes include 3 event credits. One-day passes are bound to a specific event.
             </CardDescription>
           </CardHeader>

@@ -35,25 +35,25 @@ export function PassCard({ pass, registration }: PassCardProps) {
   const isExclusive = pass.pass_type === 'exclusive';
 
   return (
-    <div className="bg-white border-2 border-neo-black rounded-xl p-5 shadow-brutal text-center max-w-sm mx-auto space-y-4">
+    <div className="bg-[#171622] border-2 border-white/15 rounded-xl p-5 shadow-brutal text-center max-w-sm mx-auto space-y-4 text-white">
       <div>
         <div className="flex items-center justify-center gap-2">
-          <h3 className="text-lg font-black uppercase tracking-tight text-neo-black">
+          <h3 className="text-lg font-black uppercase tracking-tight text-white">
             {registration.attendee_name}
           </h3>
           <Badge variant={isExclusive ? 'warning' : 'secondary'} className="text-[10px]">
             {isExclusive ? '⭐ Exclusive' : '🎫 One Day'}
           </Badge>
         </div>
-        <p className="text-xs text-gray-500 font-mono font-bold mt-1">
+        <p className="text-xs text-gray-400 font-mono font-bold mt-1">
           {registration.registration_id}
         </p>
       </div>
 
-      {/* QR Code Container */}
+      {/* QR Code Container: high contrast white for physical scanner readability */}
       <div
         ref={qrRef}
-        className="flex justify-center p-3 bg-white border-2 border-neo-black rounded-xl inline-block mx-auto shadow-brutal-sm"
+        className="flex justify-center p-3.5 bg-white border-2 border-white rounded-xl inline-block mx-auto shadow-brutal-sm"
       >
         <QRCodeSVG
           value={pass.qr_token}
@@ -64,17 +64,17 @@ export function PassCard({ pass, registration }: PassCardProps) {
       </div>
 
       {/* Pass details */}
-      <div className="text-xs font-bold text-gray-700 space-y-1 bg-neo-bg p-2.5 rounded-lg border-2 border-neo-black">
+      <div className="text-xs font-bold text-gray-300 space-y-1 bg-[#0e0d15] p-2.5 rounded-lg border-2 border-white/15">
         <p>
-          Token: <span className="font-mono text-neo-purple">{pass.qr_token.slice(0, 16)}...</span>
+          Token: <span className="font-mono text-neo-lime">{pass.qr_token.slice(0, 16)}...</span>
         </p>
         {isExclusive && (
           <p>
             Credits:{' '}
-            <span className="font-black text-neo-purple">{pass.remaining_credits} remaining</span>
+            <span className="font-black text-neo-yellow">{pass.remaining_credits} remaining</span>
           </p>
         )}
-        <p className={pass.is_active ? 'text-emerald-700 font-black' : 'text-rose-600 font-black'}>
+        <p className={pass.is_active ? 'text-neo-lime font-black' : 'text-neo-peach font-black'}>
           {pass.is_active ? '✓ Valid & Active' : '✗ Inactive'}
         </p>
       </div>
@@ -96,7 +96,7 @@ export function PassCard({ pass, registration }: PassCardProps) {
                 text: `QR Token: ${pass.qr_token}`,
               });
             }}
-            className="w-10 h-10 rounded-lg bg-white text-neo-black border-2 border-neo-black shadow-brutal flex items-center justify-center hover:bg-neo-bg active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+            className="w-10 h-10 rounded-lg bg-[#0e0d15] text-white border-2 border-white/20 shadow-brutal flex items-center justify-center hover:bg-white/10 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
           >
             <Share2 className="h-4 w-4 stroke-[2.5]" />
           </button>

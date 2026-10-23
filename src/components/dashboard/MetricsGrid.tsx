@@ -1,11 +1,8 @@
 import {
   Users,
   UserCheck,
-  UserX,
   Clock,
-  AlertCircle,
   Star,
-  Layers,
 } from "lucide-react";
 import { MetricCard } from "./MetricCard";
 import type { DashboardMetrics } from "../../types";
@@ -15,18 +12,18 @@ interface MetricsGridProps {
 }
 
 export function MetricsGrid({ metrics }: MetricsGridProps) {
-  const checkinPercent =
-    metrics.registered > 0
-      ? Math.round((metrics.checked_in / metrics.registered) * 100)
-      : 0;
-
   const regPercent =
     metrics.total_capacity > 0
       ? Math.round((metrics.registered / metrics.total_capacity) * 100)
       : 0;
 
+  const checkinPercent =
+    metrics.registered > 0
+      ? Math.round((metrics.checked_in / metrics.registered) * 100)
+      : 0;
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       <MetricCard
         title="Registered"
         value={metrics.registered}
@@ -43,6 +40,7 @@ export function MetricsGrid({ metrics }: MetricsGridProps) {
         badge={`${checkinPercent}%`}
         subtitle={`${metrics.not_arrived} not arrived`}
       />
+      {/* Payment pending metric card commented out for now
       <MetricCard
         title="Awaiting Pay"
         value={metrics.payment_pending}
@@ -51,6 +49,7 @@ export function MetricsGrid({ metrics }: MetricsGridProps) {
         badge={metrics.payment_pending > 0 ? "Pending" : "Clear"}
         subtitle="Unverified passes"
       />
+      */}
       <MetricCard
         title="VIP / Exclusive"
         value={metrics.exclusive_members}
@@ -69,16 +68,9 @@ export function MetricsGrid({ metrics }: MetricsGridProps) {
       <MetricCard
         title="Not Arrived"
         value={metrics.not_arrived}
-        icon={UserX}
-        color="black"
-        subtitle="Awaiting entry"
-      />
-      <MetricCard
-        title="Total Capacity"
-        value={metrics.total_capacity}
-        icon={Layers}
+        icon={Clock}
         color="purple"
-        subtitle="Max event venue cap"
+        subtitle="Expected attendees"
       />
     </div>
   );

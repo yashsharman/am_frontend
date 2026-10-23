@@ -17,6 +17,7 @@ import { PassTypeSelector } from './PassTypeSelector';
 import { registrationsApi } from '../../api/registrations';
 import { eventsApi } from '../../api/events';
 import type { Registration, RegistrationFormData } from '../../types';
+import { formatDate } from '../../utils/format';
 import toast from 'react-hot-toast';
 
 const schema = z.object({
@@ -55,7 +56,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     resolver: zodResolver(schema),
     defaultValues: {
       pass_type: 'one_day',
-      payment_status: 'pending',
+      payment_status: 'verified',
     },
   });
 
@@ -77,6 +78,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const onSubmit = (data: FormData) => {
     mutation.mutate({
       ...data,
+      payment_status: 'verified',
       email: data.email || undefined,
       event_id: passType === 'one_day' ? data.event_id : undefined,
     } as RegistrationFormData);
@@ -144,7 +146,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             <SelectContent>
               {events.map((event) => (
                 <SelectItem key={event.id} value={event.id}>
-                  {event.name} — {event.date}
+                  {event.name} — {formatDate(event.date)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -152,11 +154,12 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         </div>
       )}
 
-      {/* Payment Status */}
+      {/* Payment Status (Commented out for now) */}
+      {/* 
       <div>
         <Label htmlFor="payment_status">Payment Status *</Label>
         <Select
-          defaultValue="pending"
+          defaultValue="verified"
           onValueChange={(val) => setValue('payment_status', val as 'pending' | 'verified' | 'failed')}
         >
           <SelectTrigger className="mt-1">
@@ -169,8 +172,10 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           </SelectContent>
         </Select>
       </div>
+      */}
 
-      {/* Payment Reference */}
+      {/* Payment Reference (Commented out for now) */}
+      {/* 
       <div>
         <Label htmlFor="payment_reference">Payment Reference</Label>
         <Input
@@ -180,6 +185,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           className="mt-1"
         />
       </div>
+      */}
 
       {/* Notes */}
       <div>

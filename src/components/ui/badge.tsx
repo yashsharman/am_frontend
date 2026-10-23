@@ -3,18 +3,18 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
+  'inline-flex items-center rounded-md border-2 border-neo-black px-2.5 py-0.5 text-xs font-black uppercase tracking-wide transition-all shadow-brutal-sm',
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-indigo-600 text-white',
-        secondary: 'border-transparent bg-gray-100 text-gray-900',
-        destructive: 'border-transparent bg-red-500 text-white',
-        outline: 'text-gray-950',
-        success: 'border-transparent bg-green-100 text-green-800',
-        warning: 'border-transparent bg-amber-100 text-amber-800',
-        danger: 'border-transparent bg-red-100 text-red-800',
-        info: 'border-transparent bg-blue-100 text-blue-800',
+        default: 'bg-neo-purple text-white',
+        secondary: 'bg-neo-bg text-neo-black',
+        destructive: 'bg-neo-peach text-white',
+        outline: 'bg-white text-neo-black',
+        success: 'bg-neo-lime text-neo-black',
+        warning: 'bg-neo-yellow text-neo-black',
+        danger: 'bg-neo-peach text-white',
+        info: 'bg-[#dae2fd] text-neo-purple',
       },
     },
     defaultVariants: {

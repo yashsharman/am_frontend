@@ -74,28 +74,32 @@ export function ImportModal({ open, onClose, defaultPassType = 'one_day', defaul
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-w-lg bg-[#171622] text-white border-2 border-white/20 shadow-brutal-lg">
         <DialogHeader>
-          <DialogTitle>Import Registrations</DialogTitle>
+          <DialogTitle className="text-white font-black uppercase tracking-tight">
+            Import Registrations
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
           {/* Template info */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800">
-            <p className="font-medium mb-1">Required columns:</p>
-            <p className="font-mono text-xs">Name, Phone, Email (optional), Payment Ref (optional), Notes (optional)</p>
+          <div className="bg-[#0e0d15] border-2 border-white/15 rounded-xl p-3.5 text-xs text-gray-300">
+            <p className="font-black uppercase text-neo-lime mb-1">Required columns:</p>
+            <p className="font-mono text-[11px] text-gray-400">
+              Name, Phone, Email (optional), Payment Ref (optional), Notes (optional)
+            </p>
           </div>
 
           {/* Drop zone */}
           <div
-            className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-indigo-400 transition-colors"
+            className="border-2 border-dashed border-white/20 rounded-xl p-8 text-center cursor-pointer hover:border-neo-lime hover:bg-white/5 transition-colors bg-[#0e0d15]"
             onClick={() => fileRef.current?.click()}
           >
-            <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-            <p className="text-sm font-medium text-gray-700">
-              {file ? file.name : 'Drop CSV/Excel file here or click to browse'}
+            <Upload className="h-8 w-8 text-neo-purple mx-auto mb-2 stroke-[2.5]" />
+            <p className="text-sm font-black uppercase text-white">
+              {file ? file.name : 'Drop CSV / Excel file here or click to browse'}
             </p>
-            <p className="text-xs text-gray-400 mt-1">Supports .csv, .xlsx, .xls</p>
+            <p className="text-xs font-bold text-gray-400 mt-1">Supports .csv, .xlsx, .xls</p>
             <input
               ref={fileRef}
               type="file"
@@ -108,21 +112,21 @@ export function ImportModal({ open, onClose, defaultPassType = 'one_day', defaul
           {/* Preview */}
           {preview.length > 0 && (
             <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">Preview (first 5 rows):</p>
-              <div className="overflow-x-auto rounded-lg border border-gray-200">
+              <p className="text-xs font-black uppercase text-gray-400 mb-2">Preview (first 5 rows):</p>
+              <div className="overflow-x-auto rounded-xl border-2 border-white/15 bg-[#0e0d15]">
                 <table className="text-xs w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-[#1f1d2e] border-b border-white/10 text-gray-300">
                     <tr>
                       {Object.keys(preview[0]).map((k) => (
-                        <th key={k} className="px-3 py-2 text-left text-gray-500 font-medium">{k}</th>
+                        <th key={k} className="px-3 py-2 text-left font-black uppercase text-[10px]">{k}</th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="divide-y divide-white/10 text-gray-300">
                     {preview.map((row, i) => (
-                      <tr key={i} className="border-t border-gray-100">
+                      <tr key={i}>
                         {Object.values(row).map((val, j) => (
-                          <td key={j} className="px-3 py-2 text-gray-700 truncate max-w-[120px]">{val}</td>
+                          <td key={j} className="px-3 py-2 font-bold truncate max-w-[120px]">{val}</td>
                         ))}
                       </tr>
                     ))}
@@ -134,20 +138,20 @@ export function ImportModal({ open, onClose, defaultPassType = 'one_day', defaul
 
           {/* Result */}
           {result && (
-            <div className={`rounded-lg p-3 ${result.errors.length === 0 ? 'bg-green-50' : 'bg-amber-50'}`}>
+            <div className={`rounded-xl p-3.5 border-2 ${result.errors.length === 0 ? 'bg-[#064e3b]/30 border-neo-lime text-neo-lime' : 'bg-amber-950/40 border-neo-yellow text-neo-yellow'}`}>
               <div className="flex items-center gap-2">
                 {result.errors.length === 0 ? (
-                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <CheckCircle className="h-4 w-4 stroke-[3]" />
                 ) : (
-                  <AlertCircle className="h-4 w-4 text-amber-600" />
+                  <AlertCircle className="h-4 w-4 stroke-[3]" />
                 )}
-                <p className="text-sm font-medium">
+                <p className="text-xs font-black uppercase">
                   {result.created} registrations imported
                   {result.errors.length > 0 && `, ${result.errors.length} errors`}
                 </p>
               </div>
               {result.errors.length > 0 && (
-                <ul className="mt-2 text-xs text-red-700 list-disc list-inside">
+                <ul className="mt-2 text-xs text-rose-300 list-disc list-inside font-bold">
                   {result.errors.slice(0, 3).map((err, i) => <li key={i}>{err}</li>)}
                 </ul>
               )}
@@ -159,11 +163,15 @@ export function ImportModal({ open, onClose, defaultPassType = 'one_day', defaul
           <Button variant="outline" onClick={handleClose}>
             <X className="h-4 w-4 mr-1" />Close
           </Button>
-          <Button onClick={handleImport} disabled={!file || isImporting}>
+          <Button
+            onClick={handleImport}
+            disabled={!file || isImporting}
+            className="bg-neo-purple text-white border-2 border-white/20 shadow-brutal hover:bg-indigo-600"
+          >
             {isImporting ? (
               <><Loader2 className="h-4 w-4 animate-spin mr-2" />Importing...</>
             ) : (
-              <><Upload className="h-4 w-4 mr-2" />Import</>
+              <><Upload className="h-4 w-4 mr-2 stroke-[2.5]" />Import</>
             )}
           </Button>
         </DialogFooter>

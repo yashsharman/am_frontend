@@ -38,12 +38,14 @@ export function EventsPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-white max-w-5xl mx-auto w-full">
       {/* Header */}
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Events Management</h1>
-          <p className="text-xs sm:text-sm text-gray-500">
+          <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+            Events Schedule
+          </h1>
+          <p className="text-xs sm:text-sm font-bold text-gray-400 mt-0.5">
             Create events, set capacity thresholds, and manage exclusive pass rules
           </p>
         </div>
@@ -53,21 +55,23 @@ export function EventsPage() {
             setEditingEvent(undefined);
             setIsModalOpen(true);
           }}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm"
+          className="bg-neo-purple hover:bg-indigo-600 text-white shadow-brutal border-2 border-white/20"
         >
-          <Plus className="h-4 w-4 mr-1.5" />
+          <Plus className="h-4 w-4 mr-1.5 stroke-[3]" />
           Create Event
         </Button>
       </div>
 
       {/* Events List */}
       {isLoading ? (
-        <div className="text-center py-12 text-sm text-gray-500">Loading events...</div>
+        <div className="text-center py-12 text-xs font-black uppercase text-gray-400">
+          Loading events...
+        </div>
       ) : events.length === 0 ? (
-        <Card className="border-dashed border-2 p-8 text-center bg-gray-50/50">
-          <Calendar className="h-12 w-12 text-indigo-400 mx-auto mb-3" />
-          <h3 className="text-lg font-semibold text-gray-900">No Events Yet</h3>
-          <p className="text-sm text-gray-500 max-w-sm mx-auto mt-1 mb-4">
+        <Card className="border-2 border-white/15 bg-[#171622] p-8 text-center text-white shadow-brutal">
+          <Calendar className="h-12 w-12 text-neo-lime mx-auto mb-3 stroke-[2.5]" />
+          <h3 className="text-lg font-black uppercase tracking-tight text-white">No Events Yet</h3>
+          <p className="text-xs font-bold text-gray-400 max-w-sm mx-auto mt-1 mb-4">
             Click the button below to schedule your first event with capacity controls.
           </p>
           <Button
@@ -75,9 +79,9 @@ export function EventsPage() {
               setEditingEvent(undefined);
               setIsModalOpen(true);
             }}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-neo-purple hover:bg-indigo-600 text-white border-2 border-white/20 shadow-brutal"
           >
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="h-4 w-4 mr-2 stroke-[3]" />
             Create Event
           </Button>
         </Card>
@@ -86,16 +90,16 @@ export function EventsPage() {
           {events.map((event) => (
             <Card
               key={event.id}
-              className="border border-gray-200 shadow-sm hover:border-indigo-300 transition-all flex flex-col justify-between"
+              className="border-2 border-white/15 bg-[#171622] text-white shadow-brutal hover:border-white/30 transition-all flex flex-col justify-between"
             >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <CardTitle className="text-base font-bold text-gray-900 truncate">
+                    <CardTitle className="text-base font-black text-white truncate">
                       {event.name}
                     </CardTitle>
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
-                      <Calendar className="h-3.5 w-3.5 shrink-0" />
+                    <div className="flex items-center gap-1.5 text-xs text-gray-400 mt-1 font-bold">
+                      <Calendar className="h-3.5 w-3.5 shrink-0 text-neo-lime stroke-[2.5]" />
                       <span>{formatDate(event.date)}</span>
                     </div>
                   </div>
@@ -115,63 +119,59 @@ export function EventsPage() {
                 </div>
               </CardHeader>
 
-              <CardContent className="space-y-3 flex-1">
-                <div className="flex items-center gap-1.5 text-xs text-gray-600">
-                  <MapPin className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+              <CardContent className="space-y-3 flex-1 text-white">
+                <div className="flex items-center gap-1.5 text-xs text-gray-300 font-bold">
+                  <MapPin className="h-3.5 w-3.5 text-neo-peach shrink-0 stroke-[2.5]" />
                   <span className="truncate">{event.venue}</span>
                 </div>
 
                 {event.description && (
-                  <p className="text-xs text-gray-500 line-clamp-2">
+                  <p className="text-xs text-gray-400 line-clamp-2">
                     {event.description}
                   </p>
                 )}
 
-                <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-1 text-gray-700 font-medium">
-                    <Users className="h-3.5 w-3.5 text-gray-400" />
+                <div className="pt-2 border-t-2 border-white/10 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1 text-gray-300 font-bold">
+                    <Users className="h-3.5 w-3.5 text-neo-lime stroke-[2.5]" />
                     <span>Capacity: {event.capacity} max</span>
                   </div>
 
                   {event.is_exclusive_eligible ? (
-                    <span className="inline-flex items-center gap-1 text-amber-700 font-medium bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                      <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-                      Exclusive Eligible
-                    </span>
+                    <Badge variant="warning" className="text-[10px]">
+                      <Star className="h-3 w-3 mr-1 fill-neo-black text-neo-black stroke-[2.5]" />
+                      Exclusive
+                    </Badge>
                   ) : (
-                    <span className="text-gray-400">One-day only</span>
+                    <span className="text-gray-500 font-bold text-[11px]">One-day only</span>
                   )}
                 </div>
               </CardContent>
 
               {/* Action buttons footer */}
-              <div className="p-3 bg-gray-50/80 border-t border-gray-100 rounded-b-xl flex items-center justify-end gap-1">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 px-2.5 text-gray-600 hover:text-gray-900"
+              <div className="p-3 bg-[#1f1d2e] border-t-2 border-white/10 rounded-b-xl flex items-center justify-end gap-1.5">
+                <button
+                  className="h-8 px-2.5 rounded-md bg-[#0e0d15] text-white border-2 border-white/20 shadow-brutal-sm text-xs font-black uppercase flex items-center gap-1 hover:bg-neo-yellow hover:text-neo-black hover:border-neo-black active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
                   onClick={() => {
                     setEditingEvent(event);
                     setIsModalOpen(true);
                   }}
                 >
-                  <Edit2 className="h-3.5 w-3.5 mr-1" />
+                  <Edit2 className="h-3.5 w-3.5 stroke-[2.5]" />
                   Edit
-                </Button>
+                </button>
 
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 px-2.5 text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                <button
+                  className="h-8 px-2.5 rounded-md bg-[#0e0d15] text-rose-400 border-2 border-white/20 shadow-brutal-sm text-xs font-black uppercase flex items-center gap-1 hover:bg-neo-peach hover:text-white active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
                   onClick={() => {
                     if (confirm(`Are you sure you want to delete event "${event.name}"?`)) {
                       deleteMutation.mutate(event.id);
                     }
                   }}
                 >
-                  <Trash2 className="h-3.5 w-3.5 mr-1" />
+                  <Trash2 className="h-3.5 w-3.5 stroke-[2.5]" />
                   Delete
-                </Button>
+                </button>
               </div>
             </Card>
           ))}

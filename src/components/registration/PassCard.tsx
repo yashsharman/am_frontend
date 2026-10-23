@@ -1,9 +1,7 @@
 import { useRef } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Download, Share2 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
 import type { Pass, Registration } from '../../types';
 
 interface PassCardProps {
@@ -34,61 +32,76 @@ export function PassCard({ pass, registration }: PassCardProps) {
     img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
   };
 
+  const isExclusive = pass.pass_type === 'exclusive';
+
   return (
-    <Card className="text-center max-w-sm mx-auto">
-      <CardHeader className="pb-3">
+    <div className="bg-[#171622] border-2 border-white/15 rounded-xl p-5 shadow-brutal text-center max-w-sm mx-auto space-y-4 text-white">
+      <div>
         <div className="flex items-center justify-center gap-2">
-          <CardTitle className="text-base">{registration.attendee_name}</CardTitle>
-          <Badge variant={pass.pass_type === 'exclusive' ? 'default' : 'secondary'}>
-            {pass.pass_type === 'exclusive' ? '⭐ Exclusive' : '🎫 One Day'}
+          <h3 className="text-lg font-black uppercase tracking-tight text-white">
+            {registration.attendee_name}
+          </h3>
+          <Badge variant={isExclusive ? 'warning' : 'secondary'} className="text-[10px]">
+            {isExclusive ? '⭐ Exclusive' : '🎫 One Day'}
           </Badge>
         </div>
-        <p className="text-xs text-gray-400 font-mono">{registration.registration_id}</p>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* QR Code */}
-        <div
-          ref={qrRef}
-          className="flex justify-center p-4 bg-white border-2 border-gray-100 rounded-xl inline-block mx-auto"
-        >
-          <QRCodeSVG
-            value={pass.qr_token}
-            size={180}
-            level="M"
-            includeMargin
-          />
-        </div>
+        <p className="text-xs text-gray-400 font-mono font-bold mt-1">
+          {registration.registration_id}
+        </p>
+      </div>
 
-        {/* Pass details */}
-        <div className="text-xs text-gray-500 space-y-1">
-          <p>QR Token: <span className="font-mono text-gray-700">{pass.qr_token.slice(0, 16)}...</span></p>
-          {pass.pass_type === 'exclusive' && (
-            <p>Credits: <span className="font-bold text-indigo-700">{pass.remaining_credits} remaining</span></p>
-          )}
-          <p className={pass.is_active ? 'text-green-600 font-medium' : 'text-red-500 font-medium'}>
-            {pass.is_active ? '✓ Active' : '✗ Inactive'}
+      {/* QR Code Container: high contrast white for physical scanner readability */}
+      <div
+        ref={qrRef}
+        className="flex justify-center p-3.5 bg-white border-2 border-white rounded-xl inline-block mx-auto shadow-brutal-sm"
+      >
+        <QRCodeSVG
+          value={pass.qr_token}
+          size={180}
+          level="M"
+          includeMargin
+        />
+      </div>
+
+      {/* Pass details */}
+      <div className="text-xs font-bold text-gray-300 space-y-1 bg-[#0e0d15] p-2.5 rounded-lg border-2 border-white/15">
+        <p>
+          Token: <span className="font-mono text-neo-lime">{pass.qr_token.slice(0, 16)}...</span>
+        </p>
+        {isExclusive && (
+          <p>
+            Credits:{' '}
+            <span className="font-black text-neo-yellow">{pass.remaining_credits} remaining</span>
           </p>
-        </div>
+        )}
+        <p className={pass.is_active ? 'text-neo-lime font-black' : 'text-neo-peach font-black'}>
+          {pass.is_active ? '✓ Valid & Active' : '✗ Inactive'}
+        </p>
+      </div>
 
-        {/* Actions */}
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1" onClick={downloadQR}>
-            <Download className="h-4 w-4 mr-1" />
-            Download QR
-          </Button>
-          {navigator.share && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                navigator.share({ title: `Pass for ${registration.attendee_name}`, text: `QR Token: ${pass.qr_token}` });
-              }}
-            >
-              <Share2 className="h-4 w-4" />
-            </Button>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+      {/* Actions */}
+      <div className="flex gap-2">
+        <button
+          onClick={downloadQR}
+          className="flex-1 h-10 px-3 rounded-lg bg-neo-yellow text-neo-black border-2 border-neo-black shadow-brutal font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 hover:bg-amber-300 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+        >
+          <Download className="h-4 w-4 stroke-[2.5]" />
+          Download QR
+        </button>
+        {navigator.share && (
+          <button
+            onClick={() => {
+              navigator.share({
+                title: `Pass for ${registration.attendee_name}`,
+                text: `QR Token: ${pass.qr_token}`,
+              });
+            }}
+            className="w-10 h-10 rounded-lg bg-[#0e0d15] text-white border-2 border-white/20 shadow-brutal flex items-center justify-center hover:bg-white/10 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+          >
+            <Share2 className="h-4 w-4 stroke-[2.5]" />
+          </button>
+        )}
+      </div>
+    </div>
   );
 }

@@ -123,14 +123,14 @@ export function EventForm({ open, onClose, event }: EventFormProps) {
               {...register('description')}
               placeholder="Event details..."
               rows={3}
-              className="mt-1 flex w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 resize-none"
+              className="mt-1 flex w-full rounded-lg border-2 border-white/20 bg-[#0e0d15] px-3.5 py-2 text-sm font-bold text-white shadow-brutal-sm placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neo-purple focus-visible:border-neo-purple resize-none"
             />
           </div>
 
-          <div className="flex items-center justify-between p-3 bg-indigo-50 rounded-lg">
+          <div className="flex items-center justify-between p-3.5 bg-[#0e0d15] rounded-xl border-2 border-white/15">
             <div>
-              <p className="text-sm font-medium text-gray-700">Exclusive Pass Eligible</p>
-              <p className="text-xs text-gray-500">Allow exclusive pass holders to attend</p>
+              <p className="text-sm font-black uppercase text-white">Exclusive Pass Eligible</p>
+              <p className="text-xs font-bold text-gray-400">Allow exclusive pass holders to attend</p>
             </div>
             <Switch
               checked={isExclusive}

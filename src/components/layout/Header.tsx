@@ -1,41 +1,45 @@
-import { Menu, LogOut, Bell } from 'lucide-react';
-import { Button } from '../ui/button';
-import { useAuth } from '../../hooks/useAuth';
+import { Menu } from "lucide-react";
+import aftermilesLogo from "../../assets/aftermiles.jpg";
 
 interface HeaderProps {
   onMenuClick: () => void;
   title?: string;
 }
 
-export function Header({ onMenuClick, title = 'Dashboard' }: HeaderProps) {
-  const { user, logout } = useAuth();
-
+export function Header({ onMenuClick, title = "Dashboard" }: HeaderProps) {
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-6 shrink-0">
-      <div className="flex items-center gap-4">
+    <header className="h-16 w-full z-30 bg-[#13121d]/95 backdrop-blur-md border-b-2 border-white/10 shrink-0 px-4 lg:px-6 flex items-center justify-between gap-3 text-white">
+      <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
-          className="lg:hidden text-gray-500 hover:text-gray-700"
+          aria-label="Open menu"
+          className="lg:hidden w-9 h-9 rounded-md bg-[#171622] border-2 border-white/20 shadow-brutal-sm flex items-center justify-center text-white hover:bg-neo-yellow hover:text-neo-black hover:border-neo-black active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
         >
-          <Menu className="h-6 w-6" />
+          <Menu className="h-5 w-5 font-bold stroke-[2.5]" />
         </button>
-        <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+
+        <div className="flex items-center gap-2.5">
+          <img
+            src={aftermilesLogo}
+            alt="Aftermiles"
+            className="w-9 h-9 rounded-lg object-cover border-2 border-white/20 shadow-brutal-sm"
+          />
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1.5 leading-none">
+              <span className="text-lg lg:text-xl font-black text-white tracking-tight">
+                Aftermiles
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
-        </Button>
-
-        <div className="flex items-center gap-3 pl-2 border-l border-gray-200">
-          <div className="hidden sm:block text-right">
-            <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-            <p className="text-xs text-gray-500 capitalize">{user?.role?.replace('_', ' ')}</p>
-          </div>
-          <Button variant="ghost" size="icon" onClick={logout} title="Logout">
-            <LogOut className="h-5 w-5 text-gray-500" />
-          </Button>
-        </div>
+        {title && (
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider hidden sm:inline-block">
+            {title}
+          </span>
+        )}
       </div>
     </header>
   );

@@ -66,9 +66,14 @@ export default function App() {
           duration: 3000,
           style: {
             borderRadius: '12px',
-            background: '#1f2937',
-            color: '#fff',
-            fontSize: '13px',
+            background: '#171622',
+            color: '#ffffff',
+            border: '2px solid rgba(255, 255, 255, 0.2)',
+            boxShadow: '4px 4px 0px #000000',
+            fontSize: '12px',
+            fontWeight: '800',
+            textTransform: 'uppercase',
+            letterSpacing: '0.025em',
             padding: '10px 16px',
           },
         }}

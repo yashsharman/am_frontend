@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-neo-black: #121118;
+  --color-neo-yellow: #d4ff32;
+  --color-neo-lime: #44f1a6;
+  --color-neo-purple: #4f46e5;
+  --color-neo-peach: #ff6b4a;
+  --color-neo-pink: #ff8af0;
+  --color-neo-bg: #0e0d15;
+  --color-neo-surface: #171622;
+  --color-neo-surface-subtle: #1f1d2e;
+  --color-neo-surface-hover: #262438;
+  --color-neo-border: rgba(255, 255, 255, 0.16);
+  --color-surface-container-lowest: #171622;
+
+  --shadow-brutal-sm: 2px 2px 0px #000000;
+  --shadow-brutal: 4px 4px 0px #000000;
+  --shadow-brutal-lg: 6px 6px 0px #000000;
+  --shadow-brutal-reverse: -3px 3px 0px #000000;
+
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -10,10 +35,12 @@
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: #f9fafb;
-    color: #111827;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #0e0d15;
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+    color-scheme: dark;
   }
 
   #root {
@@ -21,5 +48,71 @@
     min-height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #0e0d15;
   }
+}
+
+.pb-safe {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-bottom {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Hide scrollbars but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* HTML5 QR Code Scanner styling & single viewport enforcement */
+#qr-reader {
+  position: relative !important;
+  width: 100% !important;
+  border: none !important;
+  overflow: hidden !important;
+}
+
+#qr-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 480px !important;
+  object-fit: cover !important;
+  border-radius: 0.75rem !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+#qr-reader img[alt="Info icon"] {
+  display: none !important;
+}
+
+#qr-reader #qr-shaded-region {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 0.5rem !important;
 }

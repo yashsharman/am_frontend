@@ -15,7 +15,6 @@ import { CheckinResult } from '../components/checkin/CheckinResult';
 import { ManualSearch } from '../components/checkin/ManualSearch';
 import { useCheckin } from '../hooks/useCheckin';
 import { useCheckinStore } from '../stores/checkinStore';
-import { Button } from '../components/ui/button';
 import {
   Select,
   SelectContent,
@@ -23,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../components/ui/select';
-import { Card, CardContent } from '../components/ui/card';
 import toast from 'react-hot-toast';
 
 export function CheckinPage() {
@@ -93,7 +91,10 @@ export function CheckinPage() {
   // Audio helper using Web Audio API
   const playBeep = (freq: number, duration: number) => {
     try {
-      const AudioContext = window.AudioContext || (window as unknown as { webkitAudioContext: typeof window.AudioContext }).webkitAudioContext;
+      const AudioContext =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof window.AudioContext })
+          .webkitAudioContext;
       const ctx = new AudioContext();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -134,14 +135,16 @@ export function CheckinPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto space-y-4">
-      {/* Event Selection & Controls Header */}
-      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-gray-200 shadow-sm space-y-3">
+    <div className="max-w-xl mx-auto space-y-4 text-white">
+      {/* Event Selection & Gate Controls Header */}
+      <div className="bg-[#171622] p-3.5 sm:p-4 rounded-xl border-2 border-white/15 shadow-brutal space-y-3">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1 min-w-0">
-            <Calendar className="h-4 w-4 text-indigo-600 shrink-0" />
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider shrink-0">
-              Event:
+            <div className="w-7 h-7 rounded-md bg-neo-purple border-2 border-white/20 shadow-brutal-sm flex items-center justify-center text-white shrink-0">
+              <Calendar className="h-4 w-4 stroke-[2.5]" />
+            </div>
+            <span className="text-xs font-black text-white uppercase tracking-wider shrink-0">
+              Gate:
             </span>
             <Select
               value={currentEvent?.id || ''}
@@ -150,12 +153,12 @@ export function CheckinPage() {
                 if (evt) setCurrentEvent(evt);
               }}
             >
-              <SelectTrigger className="h-8 text-xs font-medium border-gray-200 flex-1 min-w-0">
+              <SelectTrigger className="h-9 text-xs font-black uppercase border-2 border-white/20 shadow-brutal-sm flex-1 min-w-0 bg-[#0e0d15] text-white">
                 <SelectValue placeholder="Choose Event" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="border-2 border-white/20 shadow-brutal-lg rounded-xl bg-[#171622] text-white">
                 {events.map((e) => (
-                  <SelectItem key={e.id} value={e.id}>
+                  <SelectItem key={e.id} value={e.id} className="font-bold text-xs uppercase">
                     {e.name}
                   </SelectItem>
                 ))}
@@ -163,47 +166,51 @@ export function CheckinPage() {
             </Select>
           </div>
 
-          <div className="flex items-center gap-1">
-            <Button
-              variant="ghost"
-              size="sm"
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
               onClick={() => setAutoAdvance(!autoAdvance)}
-              className={`h-8 px-2 text-xs font-medium ${
-                autoAdvance ? 'text-indigo-600 bg-indigo-50' : 'text-gray-400'
+              className={`h-9 px-2.5 rounded-md border-2 text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1 ${
+                autoAdvance
+                  ? 'bg-neo-yellow text-neo-black border-neo-black shadow-brutal-sm'
+                  : 'bg-[#0e0d15] text-gray-400 border-white/20 shadow-brutal-sm hover:text-white'
               }`}
               title={autoAdvance ? 'Auto-advance on (3s)' : 'Auto-advance off'}
+              type="button"
             >
-              <FastForward className="h-3.5 w-3.5 mr-1" />
-              Auto
-            </Button>
+              <FastForward className="h-3.5 w-3.5 stroke-[2.5]" />
+              <span className="hidden sm:inline">Auto</span>
+            </button>
 
-            <Button
-              variant="ghost"
-              size="sm"
+            <button
               onClick={() => setSoundEnabled(!soundEnabled)}
-              className="h-8 px-2 text-gray-500"
+              className="w-9 h-9 rounded-md bg-[#0e0d15] border-2 border-white/20 shadow-brutal-sm flex items-center justify-center text-white hover:bg-neo-yellow hover:text-neo-black hover:border-neo-black transition-all"
               title={soundEnabled ? 'Mute Sound' : 'Enable Sound'}
+              type="button"
             >
-              {soundEnabled ? <Volume2 className="h-4 w-4 text-indigo-600" /> : <VolumeX className="h-4 w-4" />}
-            </Button>
+              {soundEnabled ? (
+                <Volume2 className="h-4 w-4 text-neo-lime stroke-[2.5]" />
+              ) : (
+                <VolumeX className="h-4 w-4 text-gray-500 stroke-[2.5]" />
+              )}
+            </button>
           </div>
         </div>
 
         {/* Mode Selector Tabs (Scanner vs Manual Search) */}
-        <div className="grid grid-cols-2 gap-1.5 p-1 bg-gray-100 rounded-xl">
+        <div className="grid grid-cols-2 gap-2 p-1 bg-[#0e0d15] border-2 border-white/15 rounded-lg">
           <button
             type="button"
             onClick={() => {
               setActiveTab('scan');
               handleNextAttendee();
             }}
-            className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center justify-center gap-2 py-2 px-3 rounded-md text-xs font-black uppercase tracking-wider transition-all ${
               activeTab === 'scan'
-                ? 'bg-white text-indigo-700 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-neo-yellow border-2 border-neo-black text-neo-black shadow-brutal-sm'
+                : 'text-gray-300 hover:bg-white/5 border-2 border-transparent'
             }`}
           >
-            <Camera className="h-4 w-4" />
+            <Camera className="h-4 w-4 stroke-[2.5]" />
             Camera Scan
           </button>
 
@@ -213,13 +220,13 @@ export function CheckinPage() {
               setActiveTab('manual');
               handleNextAttendee();
             }}
-            className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center justify-center gap-2 py-2 px-3 rounded-md text-xs font-black uppercase tracking-wider transition-all ${
               activeTab === 'manual'
-                ? 'bg-white text-indigo-700 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-neo-yellow border-2 border-neo-black text-neo-black shadow-brutal-sm'
+                : 'text-gray-300 hover:bg-white/5 border-2 border-transparent'
             }`}
           >
-            <Search className="h-4 w-4" />
+            <Search className="h-4 w-4 stroke-[2.5]" />
             Manual Search
           </button>
         </div>
@@ -228,10 +235,7 @@ export function CheckinPage() {
       {/* Main Check-in Viewport */}
       {lastResult ? (
         /* Instant Verification Result Card */
-        <CheckinResult
-          result={lastResult}
-          onScanNext={handleNextAttendee}
-        />
+        <CheckinResult result={lastResult} onScanNext={handleNextAttendee} />
       ) : activeTab === 'scan' ? (
         /* Live Camera Scanner */
         <div className="space-y-2">
@@ -240,8 +244,8 @@ export function CheckinPage() {
             isProcessing={isScanning || inFlightRef.current}
             disabled={!currentEvent}
           />
-          <p className="text-center text-xs text-gray-500">
-            Center the attendee's QR pass inside the frame. Verification is instant.
+          <p className="text-center text-xs font-bold text-gray-400">
+            Center attendee QR badge inside frame. Verification is instant.
           </p>
         </div>
       ) : (
@@ -252,33 +256,36 @@ export function CheckinPage() {
         />
       )}
 
-      {/* Quick Access Info / Recent Check-ins */}
+      {/* Recent Check-ins at Gate */}
       {recentCheckins.length > 0 && (
-        <Card className="border border-gray-200">
-          <CardContent className="p-3">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-              Recent Check-ins at This Gate
-            </p>
-            <div className="space-y-1.5">
-              {recentCheckins.slice(0, 3).map((item, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center justify-between text-xs py-1 border-b border-gray-50 last:border-0"
-                >
-                  <div className="flex items-center gap-2 truncate">
-                    <CheckCircle className="h-3.5 w-3.5 text-green-600 shrink-0" />
-                    <span className="font-medium text-gray-800 truncate">
-                      {item.attendee_name || 'Attendee'}
-                    </span>
-                  </div>
-                  <span className="text-[11px] text-gray-400 font-mono shrink-0">
-                    {item.checked_in_at ? new Date(item.checked_in_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now'}
+        <div className="bg-[#171622] border-2 border-white/15 rounded-xl p-3.5 shadow-brutal">
+          <p className="text-xs font-black text-white uppercase tracking-wider mb-2">
+            Recent Check-ins at This Gate
+          </p>
+          <div className="space-y-2">
+            {recentCheckins.slice(0, 3).map((item, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between text-xs py-1.5 px-2 bg-[#0e0d15] rounded-lg border border-white/15"
+              >
+                <div className="flex items-center gap-2 truncate">
+                  <CheckCircle className="h-4 w-4 text-neo-lime stroke-[2.5] shrink-0" />
+                  <span className="font-black text-white truncate">
+                    {item.attendee_name || 'Attendee'}
                   </span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                <span className="text-[11px] font-bold text-gray-400 shrink-0">
+                  {item.checked_in_at
+                    ? new Date(item.checked_in_at).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })
+                    : 'Just now'}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

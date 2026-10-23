@@ -93,34 +93,36 @@ export function AdminPage() {
   });
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="space-y-6 max-w-4xl mx-auto text-white">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Administration & System</h1>
-          <p className="text-xs sm:text-sm text-gray-500">
+          <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+            Administration & System
+          </h1>
+          <p className="text-xs sm:text-sm font-bold text-gray-400 mt-0.5">
             Manage check-in volunteers, admin credentials, and offline synchronization
           </p>
         </div>
 
         <Button
           onClick={() => setIsStaffModalOpen(true)}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white self-start sm:self-auto"
+          className="bg-neo-purple hover:bg-indigo-600 text-white self-start sm:self-auto border-2 border-white/20 shadow-brutal"
         >
-          <UserPlus className="h-4 w-4 mr-2" />
+          <UserPlus className="h-4 w-4 mr-2 stroke-[2.5]" />
           Add Staff Member
         </Button>
       </div>
 
       {/* Offline Status & Sync Card */}
-      <Card className="border border-gray-200">
+      <Card className="border-2 border-white/15 bg-[#171622] shadow-brutal">
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center justify-between">
             <span className="flex items-center gap-2">
               {isOffline ? (
-                <WifiOff className="h-5 w-5 text-amber-500" />
+                <WifiOff className="h-5 w-5 text-neo-peach stroke-[2.5]" />
               ) : (
-                <Wifi className="h-5 w-5 text-emerald-500" />
+                <Wifi className="h-5 w-5 text-neo-lime stroke-[2.5]" />
               )}
               Offline Mode & Synchronization
             </span>
@@ -128,17 +130,17 @@ export function AdminPage() {
               {isOffline ? 'Offline' : 'Connected'}
             </Badge>
           </CardTitle>
-          <CardDescription className="text-xs">
+          <CardDescription className="text-xs font-bold text-gray-400">
             The PWA stores check-in records locally in IndexedDB when internet connection is lost.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-gray-50 border border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-[#0e0d15] border-2 border-white/15">
             <div>
-              <p className="text-sm font-semibold text-gray-900">
-                Queued Offline Scans: <span className="text-indigo-600">{pendingCount}</span>
+              <p className="text-sm font-black uppercase text-white">
+                Queued Offline Scans: <span className="text-neo-lime">{pendingCount}</span>
               </p>
-              <p className="text-xs text-gray-500 mt-0.5">
+              <p className="text-xs font-bold text-gray-400 mt-0.5">
                 {pendingCount === 0
                   ? 'All local scans are fully synchronized with the cloud backend.'
                   : 'Pending scans waiting to be sent to the server.'}
@@ -150,9 +152,8 @@ export function AdminPage() {
               size="sm"
               onClick={() => syncOfflineQueue()}
               disabled={isOffline || pendingCount === 0}
-              className="border-gray-300"
             >
-              <RefreshCw className="h-4 w-4 mr-2" />
+              <RefreshCw className="h-4 w-4 mr-2 stroke-[2.5]" />
               Sync Now
             </Button>
           </div>
@@ -160,28 +161,28 @@ export function AdminPage() {
       </Card>
 
       {/* Staff Accounts Management */}
-      <Card className="border border-gray-200">
+      <Card className="border-2 border-white/15 bg-[#171622] shadow-brutal">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base flex items-center gap-2">
-            <Users className="h-4 w-4 text-indigo-600" />
+          <CardTitle className="text-base flex items-center gap-2 text-white">
+            <Users className="h-4 w-4 text-neo-purple stroke-[2.5]" />
             Gate Staff & Roles
           </CardTitle>
-          <CardDescription className="text-xs">
+          <CardDescription className="text-xs font-bold text-gray-400">
             Check-in staff have access to the scanner and attendee directory; admins can manage events and staff.
           </CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
-            <div className="text-center py-6 text-sm text-gray-500">Loading staff...</div>
+            <div className="text-center py-6 text-xs font-black uppercase text-gray-400">Loading staff...</div>
           ) : staffList.length === 0 ? (
-            <p className="text-center py-6 text-xs text-gray-400">No staff accounts found.</p>
+            <p className="text-center py-6 text-xs font-bold text-gray-400">No staff accounts found.</p>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y-2 divide-white/10">
               {staffList.map((member) => (
                 <div key={member.id} className="py-3 flex items-center justify-between gap-3">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-semibold text-gray-900 truncate">{member.name}</p>
+                      <p className="text-sm font-black text-white truncate">{member.name}</p>
                       <Badge
                         variant={member.role === 'admin' ? 'default' : 'secondary'}
                         className="text-[10px] capitalize"
@@ -194,23 +195,21 @@ export function AdminPage() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-gray-400 truncate">{member.email}</p>
+                    <p className="text-xs font-bold text-gray-400 truncate mt-0.5">{member.email}</p>
                   </div>
 
                   {member.is_active && member.role !== 'admin' && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-rose-600 hover:text-rose-700 hover:bg-rose-50 text-xs h-8 px-2"
+                    <button
+                      className="h-8 px-2.5 rounded-md bg-[#0e0d15] text-rose-400 border-2 border-white/20 shadow-brutal-sm text-xs font-black uppercase inline-flex items-center gap-1 hover:bg-neo-peach hover:text-white active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
                       onClick={() => {
                         if (confirm(`Deactivate staff member ${member.name}?`)) {
                           deactivateMutation.mutate(member.id);
                         }
                       }}
                     >
-                      <Trash2 className="h-3.5 w-3.5 mr-1" />
+                      <Trash2 className="h-3.5 w-3.5 stroke-[2.5]" />
                       Deactivate
-                    </Button>
+                    </button>
                   )}
                 </div>
               ))}

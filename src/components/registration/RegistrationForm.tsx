@@ -189,11 +189,16 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
           {...register('notes')}
           placeholder="Any additional notes..."
           rows={2}
-          className="mt-1 flex min-h-[60px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 resize-none"
+          className="mt-1 flex min-h-[60px] w-full rounded-lg border-2 border-white/20 bg-[#0e0d15] px-3.5 py-2 text-sm font-bold text-white shadow-brutal-sm placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neo-purple focus-visible:border-neo-purple resize-none"
         />
       </div>
 
-      <Button type="submit" className="w-full" size="lg" disabled={mutation.isPending}>
+      <Button
+        type="submit"
+        className="w-full bg-neo-purple text-white shadow-brutal hover:bg-indigo-600 border-2 border-white/20"
+        size="lg"
+        disabled={mutation.isPending}
+      >
         {mutation.isPending ? (
           <><Loader2 className="h-4 w-4 animate-spin mr-2" />Creating...</>
         ) : (

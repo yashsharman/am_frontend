@@ -1,9 +1,17 @@
 import axios from 'axios';
 import { useAuthStore } from '../stores/authStore';
 
-const rawUrl = import.meta.env.VITE_API_URL || 'https://am-backend-9g5c.onrender.com';
-const normalized = rawUrl.replace(/\/+$/, '');
-const BASE_URL = normalized.endsWith('/api') ? normalized : `${normalized}/api`;
+const rawUrl = (import.meta.env.VITE_API_URL || '').trim();
+let BASE_URL = 'https://am-backend-9g5c.onrender.com/api';
+
+if (rawUrl) {
+  if (rawUrl.startsWith('/')) {
+    BASE_URL = rawUrl;
+  } else {
+    const normalized = rawUrl.replace(/\/+$/, '');
+    BASE_URL = normalized.endsWith('/api') ? normalized : `${normalized}/api`;
+  }
+}
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,

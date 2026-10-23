@@ -4,25 +4,31 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-xs font-black uppercase tracking-wider ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neo-purple disabled:pointer-events-none disabled:opacity-50 select-none active:translate-x-0.5 active:translate-y-0.5',
   {
     variants: {
       variant: {
-        default: 'bg-indigo-600 text-white hover:bg-indigo-700',
-        destructive: 'bg-red-500 text-white hover:bg-red-600',
-        outline: 'border border-gray-300 bg-white hover:bg-gray-50 text-gray-700',
-        secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200',
-        ghost: 'hover:bg-gray-100 text-gray-700',
-        link: 'text-indigo-600 underline-offset-4 hover:underline',
-        success: 'bg-green-600 text-white hover:bg-green-700',
-        warning: 'bg-amber-500 text-white hover:bg-amber-600',
+        default:
+          'bg-neo-purple text-white border-2 border-neo-black shadow-brutal hover:bg-indigo-600 active:shadow-none',
+        destructive:
+          'bg-neo-peach text-white border-2 border-neo-black shadow-brutal hover:bg-red-600 active:shadow-none',
+        outline:
+          'border-2 border-neo-black bg-white hover:bg-neo-yellow text-neo-black shadow-brutal-sm active:shadow-none',
+        secondary:
+          'bg-neo-bg text-neo-black border-2 border-neo-black shadow-brutal-sm hover:bg-neo-yellow active:shadow-none',
+        ghost: 'hover:bg-neo-yellow/30 text-neo-black',
+        link: 'text-neo-purple underline-offset-4 hover:underline normal-case',
+        success:
+          'bg-neo-lime text-neo-black border-2 border-neo-black shadow-brutal hover:bg-[#34e294] active:shadow-none',
+        warning:
+          'bg-neo-yellow text-neo-black border-2 border-neo-black shadow-brutal hover:bg-amber-300 active:shadow-none',
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8',
-        xl: 'h-14 rounded-lg px-10 text-base',
-        icon: 'h-10 w-10',
+        default: 'h-11 px-4 py-2',
+        sm: 'h-8 rounded-md px-2.5 text-xs',
+        lg: 'h-12 rounded-xl px-6 text-sm',
+        xl: 'h-14 rounded-xl px-8 text-base',
+        icon: 'h-9 w-9 rounded-md',
       },
     },
     defaultVariants: {

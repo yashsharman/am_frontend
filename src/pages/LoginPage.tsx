@@ -72,43 +72,47 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-gradient-to-br from-indigo-50 via-white to-gray-50">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-neo-bg font-sans selection:bg-neo-yellow selection:text-neo-black">
       <div className="w-full max-w-sm space-y-4">
         {/* Brand Header */}
         <div className="text-center space-y-1.5">
-          <div className="h-12 w-12 rounded-2xl bg-indigo-600 flex items-center justify-center mx-auto text-white shadow-md shadow-indigo-200">
-            <ShieldCheck className="h-7 w-7" />
+          <div className="h-12 w-12 rounded-xl bg-neo-purple border-2 border-neo-black shadow-brutal flex items-center justify-center mx-auto text-white">
+            <ShieldCheck className="h-6 w-6 stroke-[2.5]" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Aftermiles Admin</h1>
-          <p className="text-xs text-gray-500">Event Check-in & Pass Management PWA</p>
+          <h1 className="text-2xl font-black uppercase tracking-tight text-neo-black mt-2">
+            Aftermiles Admin
+          </h1>
+          <p className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+            Gate Check-in & Pass Management Deck
+          </p>
         </div>
 
         {/* Login Card */}
-        <Card className="border border-gray-200 shadow-sm">
+        <Card className="border-2 border-neo-black shadow-brutal rounded-xl bg-white">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base text-gray-900">Sign In</CardTitle>
-            <CardDescription className="text-xs">
+            <CardTitle className="text-base text-neo-black">Staff Sign In</CardTitle>
+            <CardDescription className="text-xs font-bold text-gray-500">
               Enter staff or administrator credentials
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Detailed API Error Alert */}
             {apiError && (
-              <div className="rounded-xl border border-rose-200 bg-rose-50/90 p-3.5 text-xs text-rose-900 space-y-2 animate-in fade-in duration-200">
+              <div className="rounded-xl border-2 border-neo-black bg-neo-peach/20 p-3.5 text-xs text-rose-950 space-y-2 animate-in fade-in duration-200">
                 <div className="flex items-start gap-2">
-                  <AlertCircle className="h-4 w-4 text-rose-600 shrink-0 mt-0.5" />
+                  <AlertCircle className="h-4 w-4 text-neo-peach stroke-[3] shrink-0 mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-semibold text-rose-950">
-                        {apiError.status ? `HTTP ${apiError.status}` : 'Network / Connection Error'}
+                      <span className="font-black text-rose-950 uppercase">
+                        {apiError.status ? `HTTP ${apiError.status}` : 'Connection Error'}
                       </span>
                       {apiError.statusText && (
-                        <span className="text-[10px] px-1.5 py-0.5 bg-rose-200/70 text-rose-800 rounded font-medium">
+                        <span className="text-[10px] px-1.5 py-0.5 bg-neo-peach text-white rounded border border-neo-black font-black uppercase">
                           {apiError.statusText}
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 font-medium text-rose-800 leading-snug">
+                    <p className="mt-1 font-bold text-rose-900 leading-snug">
                       {apiError.detail}
                     </p>
                   </div>
@@ -116,9 +120,9 @@ export function LoginPage() {
 
                 {/* Endpoint info */}
                 {apiError.endpoint && (
-                  <div className="flex items-center gap-1.5 text-[11px] text-rose-700/80 pt-1 border-t border-rose-200/60 truncate">
+                  <div className="flex items-center gap-1.5 text-[11px] text-rose-900 pt-1 border-t border-rose-300 truncate font-mono">
                     <Globe className="h-3 w-3 shrink-0" />
-                    <span className="truncate font-mono">{apiError.endpoint}</span>
+                    <span className="truncate">{apiError.endpoint}</span>
                   </div>
                 )}
 
@@ -128,7 +132,7 @@ export function LoginPage() {
                     <button
                       type="button"
                       onClick={() => setShowRawDetails(!showRawDetails)}
-                      className="flex items-center gap-1 text-[11px] font-semibold text-rose-800 hover:text-rose-950 mt-1 cursor-pointer"
+                      className="flex items-center gap-1 text-[11px] font-black uppercase text-rose-950 hover:underline mt-1 cursor-pointer"
                     >
                       {showRawDetails ? (
                         <>
@@ -141,7 +145,7 @@ export function LoginPage() {
                       )}
                     </button>
                     {showRawDetails && (
-                      <pre className="mt-1.5 p-2 bg-rose-950 text-rose-100 rounded-lg text-[10px] font-mono overflow-x-auto max-h-36 whitespace-pre-wrap">
+                      <pre className="mt-1.5 p-2 bg-neo-black text-neo-lime rounded-lg text-[10px] font-mono border-2 border-neo-black overflow-x-auto max-h-36 whitespace-pre-wrap">
                         {apiError.rawJson}
                       </pre>
                     )}
@@ -152,7 +156,9 @@ export function LoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="font-black text-xs uppercase tracking-wider text-neo-black">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -166,7 +172,9 @@ export function LoginPage() {
               </div>
 
               <div>
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="font-black text-xs uppercase tracking-wider text-neo-black">
+                  Password
+                </Label>
                 <Input
                   id="password"
                   type="password"
@@ -181,7 +189,7 @@ export function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer"
+                className="w-full bg-neo-purple text-white border-2 border-neo-black shadow-brutal hover:bg-indigo-600"
                 disabled={isLoggingIn}
               >
                 {isLoggingIn ? (
@@ -190,27 +198,29 @@ export function LoginPage() {
                     Signing in...
                   </>
                 ) : (
-                  'Sign In to Dashboard'
+                  'Sign In to Control Deck'
                 )}
               </Button>
             </form>
 
             {/* Quick Test Demo Fill Helper */}
-            <div className="pt-3 border-t border-gray-100 space-y-2 text-center">
-              <p className="text-[11px] text-gray-500 font-medium">Quick-fill default credentials:</p>
+            <div className="pt-3 border-t-2 border-gray-200 space-y-2 text-center">
+              <p className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">
+                Quick-fill default credentials:
+              </p>
               <div className="flex items-center justify-center gap-2 flex-wrap">
                 <button
                   type="button"
                   onClick={() => handleDemoFill('admin123')}
-                  className="inline-flex items-center gap-1 text-[11px] text-indigo-700 hover:text-indigo-900 font-medium py-1 px-2.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[11px] text-neo-black font-black uppercase py-1 px-2.5 rounded-md bg-neo-yellow border-2 border-neo-black shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                 >
-                  <Sparkles className="h-3 w-3" />
+                  <Sparkles className="h-3 w-3 stroke-[2.5]" />
                   admin123
                 </button>
                 <button
                   type="button"
                   onClick={() => handleDemoFill('admin123456')}
-                  className="inline-flex items-center gap-1 text-[11px] text-gray-700 hover:text-gray-900 font-medium py-1 px-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[11px] text-neo-black font-black uppercase py-1 px-2.5 rounded-md bg-neo-lime border-2 border-neo-black shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                 >
                   admin123456
                 </button>

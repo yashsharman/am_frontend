@@ -3,6 +3,8 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig } from 'vite'
 
+const BACKEND_URL = 'https://am-backend-9g5c.onrender.com'
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -37,8 +39,20 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: BACKEND_URL,
         changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: 4173,
+    proxy: {
+      '/api': {
+        target: BACKEND_URL,
+        changeOrigin: true,
+        secure: false,
       },
     },
   },

@@ -50,7 +50,7 @@ export function ImportModal({ open, onClose, defaultPassType = 'one_day', defaul
         ...r,
         pass_type: defaultPassType,
         event_id: defaultEventId,
-        payment_status: 'pending' as const,
+        payment_status: 'verified' as const,
       }));
       const res = await registrationsApi.bulkImport(records);
       setResult(res);

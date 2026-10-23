@@ -1,4 +1,4 @@
-import { CheckCircle, XCircle, AlertCircle, ShieldCheck, Ticket } from 'lucide-react';
+import { CheckCircle, XCircle, AlertCircle, ShieldCheck, Ticket, Clock } from 'lucide-react';
 import type { CheckinScanResult } from '../../types';
 import { formatDateTime } from '../../utils/format';
 
@@ -34,15 +34,39 @@ function getResultState(result: CheckinScanResult): ResultState {
 
 export function CheckinResult({ result, onScanNext }: CheckinResultProps) {
   const state = getResultState(result);
+  const isAlreadyCheckedIn = state === 'already_checked_in';
 
-  if (state === 'success') {
+  // For both fresh successful scans AND already-scanned passes, show full details!
+  if (state === 'success' || isAlreadyCheckedIn) {
     const isExclusive = result.pass_type === 'exclusive';
+
     return (
-      <div className="rounded-xl border-2 border-neo-lime bg-[#064e3b]/30 p-5 sm:p-6 text-center shadow-brutal transition-all animate-in fade-in zoom-in-95 duration-200 text-white">
+      <div
+        className={`rounded-xl border-2 p-5 sm:p-6 text-center shadow-brutal transition-all animate-in fade-in zoom-in-95 duration-200 text-white ${
+          isAlreadyCheckedIn
+            ? 'border-neo-yellow bg-amber-950/30'
+            : 'border-neo-lime bg-[#064e3b]/30'
+        }`}
+      >
         {/* Top Header Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-neo-lime text-neo-black text-xs font-black tracking-wider uppercase mb-3 border-2 border-neo-black shadow-brutal-sm">
-          <ShieldCheck className="h-4 w-4 stroke-[3]" />
-          VERIFIED GATE PASS
+        <div
+          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black tracking-wider uppercase mb-3 border-2 border-neo-black shadow-brutal-sm ${
+            isAlreadyCheckedIn
+              ? 'bg-neo-yellow text-neo-black'
+              : 'bg-neo-lime text-neo-black'
+          }`}
+        >
+          {isAlreadyCheckedIn ? (
+            <>
+              <AlertCircle className="h-4 w-4 stroke-[3]" />
+              ALREADY SCANNED / IN GATE
+            </>
+          ) : (
+            <>
+              <ShieldCheck className="h-4 w-4 stroke-[3]" />
+              VERIFIED GATE PASS
+            </>
+          )}
         </div>
 
         {/* Attendee Name */}
@@ -54,6 +78,14 @@ export function CheckinResult({ result, onScanNext }: CheckinResultProps) {
           <p className="text-xs text-gray-400 mb-4 font-mono font-bold">
             {result.registration_id}
           </p>
+        )}
+
+        {/* Notice banner for already scanned */}
+        {isAlreadyCheckedIn && (
+          <div className="mb-3 px-3 py-2 rounded-lg bg-amber-950/60 border border-neo-yellow/40 text-neo-yellow text-xs font-black flex items-center justify-center gap-1.5">
+            <AlertCircle className="h-4 w-4 shrink-0 stroke-[2.5]" />
+            <span>This QR badge was already checked in earlier</span>
+          </div>
         )}
 
         {/* Details Grid */}
@@ -68,9 +100,22 @@ export function CheckinResult({ result, onScanNext }: CheckinResultProps) {
 
           <div>
             <p className="text-[11px] font-black uppercase text-gray-400">Gate Status</p>
-            <p className="text-sm font-black text-neo-lime flex items-center gap-1 mt-0.5">
-              <CheckCircle className="h-4 w-4 text-neo-lime stroke-[3]" />
-              In Gate
+            <p
+              className={`text-sm font-black flex items-center gap-1 mt-0.5 ${
+                isAlreadyCheckedIn ? 'text-neo-yellow' : 'text-neo-lime'
+              }`}
+            >
+              {isAlreadyCheckedIn ? (
+                <>
+                  <Clock className="h-4 w-4 text-neo-yellow stroke-[2.5]" />
+                  Previously In
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="h-4 w-4 text-neo-lime stroke-[3]" />
+                  In Gate
+                </>
+              )}
             </p>
           </div>
 
@@ -87,21 +132,37 @@ export function CheckinResult({ result, onScanNext }: CheckinResultProps) {
         </div>
 
         {/* Status indicator */}
-        <div className="flex items-center justify-center gap-2 text-neo-lime font-black text-base mt-2">
-          <CheckCircle className="h-5 w-5 stroke-[3]" />
-          Entry Approved
+        <div
+          className={`flex items-center justify-center gap-2 font-black text-base mt-2 ${
+            isAlreadyCheckedIn ? 'text-neo-yellow' : 'text-neo-lime'
+          }`}
+        >
+          {isAlreadyCheckedIn ? (
+            <>
+              <AlertCircle className="h-5 w-5 stroke-[2.5]" />
+              Already Admitted
+            </>
+          ) : (
+            <>
+              <CheckCircle className="h-5 w-5 stroke-[3]" />
+              Entry Approved
+            </>
+          )}
         </div>
 
         {result.check_in_time && (
           <p className="text-[11px] font-bold text-gray-400 mt-1">
-            Recorded {formatDateTime(result.check_in_time)}
+            {isAlreadyCheckedIn ? 'First scanned' : 'Recorded'}{' '}
+            {formatDateTime(result.check_in_time)}
           </p>
         )}
 
         {onScanNext && (
           <button
             onClick={onScanNext}
-            className="mt-4 inline-flex items-center justify-center w-full h-11 px-4 rounded-lg bg-neo-purple text-white font-black text-xs uppercase tracking-wider hover:bg-indigo-600 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all border-2 border-white/20 shadow-brutal"
+            className={`mt-4 inline-flex items-center justify-center w-full h-11 px-4 rounded-lg text-white font-black text-xs uppercase tracking-wider hover:opacity-90 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all border-2 border-white/20 shadow-brutal ${
+              isAlreadyCheckedIn ? 'bg-[#1f1d2e]' : 'bg-neo-purple hover:bg-indigo-600'
+            }`}
           >
             Scan Next Attendee
           </button>
@@ -110,30 +171,12 @@ export function CheckinResult({ result, onScanNext }: CheckinResultProps) {
     );
   }
 
-  // Error / Warning states
-  const isAlreadyCheckedIn = state === 'already_checked_in';
-
+  // Other Error states (invalid, payment pending, wrong event, etc.)
   return (
-    <div
-      className={`rounded-xl border-2 p-5 sm:p-6 text-center shadow-brutal transition-all animate-in fade-in zoom-in-95 duration-200 text-white ${
-        isAlreadyCheckedIn
-          ? 'bg-amber-950/30 border-neo-yellow'
-          : 'bg-rose-950/30 border-neo-peach'
-      }`}
-    >
-      <div
-        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black tracking-wider uppercase mb-3 border-2 border-neo-black shadow-brutal-sm ${
-          isAlreadyCheckedIn
-            ? 'bg-neo-yellow text-neo-black'
-            : 'bg-neo-peach text-white'
-        }`}
-      >
-        {isAlreadyCheckedIn ? (
-          <AlertCircle className="h-4 w-4 stroke-[3]" />
-        ) : (
-          <XCircle className="h-4 w-4 stroke-[3]" />
-        )}
-        {isAlreadyCheckedIn ? 'ALREADY CHECKED IN' : 'SCAN FAILED'}
+    <div className="rounded-xl border-2 p-5 sm:p-6 text-center shadow-brutal transition-all animate-in fade-in zoom-in-95 duration-200 text-white bg-rose-950/30 border-neo-peach">
+      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black tracking-wider uppercase mb-3 border-2 border-neo-black shadow-brutal-sm bg-neo-peach text-white">
+        <XCircle className="h-4 w-4 stroke-[3]" />
+        SCAN FAILED
       </div>
 
       <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight mb-2">

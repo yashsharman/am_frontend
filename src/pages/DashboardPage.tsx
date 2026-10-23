@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "../components/ui/select";
 import { useCheckinStore } from "../stores/checkinStore";
-import { formatDateTime } from "../utils/format";
+import { formatDateTime, formatDate } from "../utils/format";
 import type { DashboardMetrics } from "../types";
 
 export function DashboardPage() {
@@ -285,13 +285,13 @@ export function DashboardPage() {
                           value={evt.id}
                           className="font-bold text-xs uppercase"
                         >
-                          {evt.name} ({evt.date})
+                          {evt.name} ({formatDate(evt.date)})
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                   <span className="text-xs font-bold text-gray-400 truncate mt-0.5">
-                    {selectedEvent?.date || "Today"} •{" "}
+                    {selectedEvent?.date ? formatDate(selectedEvent.date) : "Today"} •{" "}
                     {selectedEvent?.venue || "Main Gate"}
                   </span>
                 </div>

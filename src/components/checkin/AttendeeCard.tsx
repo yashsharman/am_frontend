@@ -2,7 +2,7 @@ import { User, Phone, Mail, CreditCard, Calendar } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import type { Registration } from '../../types';
-import { formatDate, formatPhone, formatPassType, formatPaymentStatus } from '../../utils/format';
+import { formatDate, formatPhone, formatPassType } from '../../utils/format';
 
 interface AttendeeCardProps {
   registration: Registration;
@@ -10,12 +10,6 @@ interface AttendeeCardProps {
 
 export function AttendeeCard({ registration }: AttendeeCardProps) {
   const { pass } = registration;
-
-  const paymentBadgeVariant = {
-    verified: 'success' as const,
-    pending: 'warning' as const,
-    failed: 'danger' as const,
-  }[registration.payment_status] || 'secondary' as const;
 
   return (
     <Card>
@@ -49,9 +43,11 @@ export function AttendeeCard({ registration }: AttendeeCardProps) {
               {formatPassType(pass.pass_type)}
             </Badge>
           )}
+          {/* Payment badge commented out for now
           <Badge variant={paymentBadgeVariant}>
             {formatPaymentStatus(registration.payment_status)}
           </Badge>
+          */}
           {pass && pass.pass_type === 'exclusive' && (
             <div className="flex items-center gap-1 text-xs text-gray-500">
               <CreditCard className="h-3 w-3" />

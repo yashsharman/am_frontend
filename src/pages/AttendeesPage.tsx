@@ -39,7 +39,7 @@ import type { Registration } from "../types";
 export function AttendeesPage() {
   const [search, setSearch] = useState("");
   const [selectedEventId, setSelectedEventId] = useState<string>("all");
-  const [paymentFilter, setPaymentFilter] = useState<string>("all");
+  // const [paymentFilter, setPaymentFilter] = useState<string>("all");
   const [passTypeFilter, setPassTypeFilter] = useState<string>("all");
   const [selectedPassReg, setSelectedPassReg] = useState<Registration | null>(
     null,
@@ -58,14 +58,12 @@ export function AttendeesPage() {
       "registrations",
       search,
       selectedEventId,
-      paymentFilter,
       passTypeFilter,
     ],
     queryFn: () =>
       registrationsApi.list({
         search: search || undefined,
         event_id: selectedEventId === "all" ? undefined : selectedEventId,
-        payment_status: paymentFilter === "all" ? undefined : paymentFilter,
         pass_type: passTypeFilter === "all" ? undefined : passTypeFilter,
       }),
   });
@@ -74,7 +72,6 @@ export function AttendeesPage() {
 
   const { exportCSV, isExporting } = useExport({
     event_id: selectedEventId === "all" ? undefined : selectedEventId,
-    payment_status: paymentFilter === "all" ? undefined : paymentFilter,
     pass_type: passTypeFilter === "all" ? undefined : passTypeFilter,
   });
 
@@ -123,7 +120,7 @@ export function AttendeesPage() {
         </div>
 
         {/* Filters Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-2 gap-2.5">
           <Select value={selectedEventId} onValueChange={setSelectedEventId}>
             <SelectTrigger className="text-xs font-black uppercase h-10 border-2 border-white/20 shadow-brutal-sm bg-[#0e0d15] text-white">
               <SelectValue placeholder="Events" />
@@ -144,6 +141,7 @@ export function AttendeesPage() {
             </SelectContent>
           </Select>
 
+          {/* Payment filter commented out for now
           <Select value={paymentFilter} onValueChange={setPaymentFilter}>
             <SelectTrigger className="text-xs font-black uppercase h-10 border-2 border-white/20 shadow-brutal-sm bg-[#0e0d15] text-white">
               <SelectValue placeholder="Payments" />
@@ -172,6 +170,7 @@ export function AttendeesPage() {
               </SelectItem>
             </SelectContent>
           </Select>
+          */}
 
           <Select value={passTypeFilter} onValueChange={setPassTypeFilter}>
             <SelectTrigger className="text-xs font-black uppercase h-10 border-2 border-white/20 shadow-brutal-sm bg-[#0e0d15] text-white">
@@ -262,7 +261,8 @@ export function AttendeesPage() {
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                  <div className="flex items-center justify-end pt-2 border-t border-white/10">
+                    {/* Payment badge commented out for now
                     <Badge
                       variant={
                         reg.payment_status === "verified"
@@ -275,6 +275,7 @@ export function AttendeesPage() {
                     >
                       {reg.payment_status}
                     </Badge>
+                    */}
 
                     <div className="flex items-center gap-1.5">
                       {pass && (
@@ -310,7 +311,7 @@ export function AttendeesPage() {
                   <th className="py-3.5 px-4">Attendee</th>
                   <th className="py-3.5 px-4">Contact</th>
                   <th className="py-3.5 px-4">Pass Tier</th>
-                  <th className="py-3.5 px-4">Payment</th>
+                  {/* <th className="py-3.5 px-4">Payment</th> */}
                   <th className="py-3.5 px-4">Registered Date</th>
                   <th className="py-3.5 px-4 text-right">Actions</th>
                 </tr>
@@ -351,6 +352,7 @@ export function AttendeesPage() {
                           </div>
                         )}
                       </td>
+                      {/* Payment column commented out for now
                       <td className="py-3.5 px-4">
                         <Badge
                           variant={
@@ -365,6 +367,7 @@ export function AttendeesPage() {
                           {reg.payment_status}
                         </Badge>
                       </td>
+                      */}
                       <td className="py-3.5 px-4 text-xs font-bold text-gray-400">
                         {formatDate(reg.created_at)}
                       </td>

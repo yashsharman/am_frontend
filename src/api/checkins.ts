@@ -59,6 +59,22 @@ export const checkinsApi = {
         registrationId = detail.registration_id;
       }
 
+      // Fallback: If attendee details weren't in error payload (e.g. older backend or unexpected format),
+      // resolve the pass using qrToken to fetch attendee info!
+      if (!attendeeName && qrToken) {
+        try {
+          const { data: passInfo } = await apiClient.get(`/passes/token/${qrToken}`);
+          if (passInfo && passInfo.registration) {
+            attendeeName = passInfo.registration.attendee_name;
+            registrationId = passInfo.registration.registration_id;
+            passType = passInfo.pass_type;
+            remainingCredits = passInfo.remaining_credits;
+          }
+        } catch {
+          // Ignore fallback fetch error
+        }
+      }
+
       return {
         success: false,
         error_code: errorCode,
